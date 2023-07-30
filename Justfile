@@ -1,6 +1,7 @@
 set positional-arguments
 
 alias u := update
+alias gen := generate
 
 default:
   @just --list
@@ -23,3 +24,6 @@ fmt:
 
 tidy:
 	go mod tidy
+
+generate:
+	go run ./script
