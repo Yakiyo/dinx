@@ -9,3 +9,19 @@ func TestUrl(t *testing.T) {
 		t.Fatalf("Output did not match expected string\nReceived: %v\nExpected: %v", out, expected)
 	}
 }
+
+func TestValidChannel(t *testing.T) {
+	mock := map[string]bool{
+		"stable": true,
+		"dev":    true,
+		"beta":   true,
+		"blah":   false,
+		"bruh":   false,
+	}
+	for k, v := range mock {
+		res := IsValidChannel(k)
+		if res != v {
+			t.Fatalf("Failed to determine valid channel for %v. Expected %v, got %v", k, v, res)
+		}
+	}
+}
