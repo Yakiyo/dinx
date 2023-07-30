@@ -8,10 +8,9 @@
  *
  * Run the script from the root
  * ```
- *	go run script/generate.go
- *
- * # or use just
- * just gen
+ *   $ go run script/generate.go
+ *   # or use just
+ *   $ just gen
  * ```
  */
 
