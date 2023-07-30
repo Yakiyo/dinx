@@ -1,5 +1,9 @@
 tasks:
-  - init: go get
+  - init: go get && go build ./...
     before: brew install just
-    command: go build .
+    command: go run main.go
+
+vscode:
+  extensions:
+    - golang.Go
 
