@@ -1,0 +1,5 @@
+tasks:
+  - init: go get
+    before: brew install just
+    command: go build .
+
