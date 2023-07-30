@@ -17,8 +17,61 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"sync"
+
+	"github.com/Yakiyo/dinx/utils"
+	json "github.com/json-iterator/go"
+)
 
 func main() {
-	fmt.Println("Hello World")
+	var wg sync.WaitGroup
+	m := sync.Map{}
+
+	for _, chn := range utils.Channels {
+		wg.Add(1)
+		chn := chn
+		go func() {
+			fmt.Printf("Running goroutine for %v...\n", chn)
+			defer wg.Done()
+			do(chn, &m)
+		}()
+	}
+
+	wg.Wait()
+
+	plain := map[string][]string{}
+
+	fmt.Println("Making map...")
+	for _, chn := range utils.Channels {
+		v, _ := m.Load(chn)
+		plain[chn] = v.([]string)
+	}
+
+	out, err := json.MarshalIndent(plain, "", "    ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Got json. Writing to file...")
+	err = os.WriteFile("versions.json", out, 0666)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Successfully ran script")
+}
+
+// This is the main func that runs thrice, once for every channel. We use
+// goroutines to run them all, then wait on them to get the data and finally
+// write em to the file
+func do(channel string, m *sync.Map) {
+	content := fetch(channel)
+	stripped := []string{}
+
+	for _, v := range content {
+		strip := stripVers(v)
+		stripped = append(stripped, strip)
+	}
+	m.Store(channel, stripped)
 }
