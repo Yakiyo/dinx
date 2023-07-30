@@ -7,7 +7,7 @@ import (
 	"github.com/Yakiyo/dinx/utils"
 )
 
-func fetch(channel string) {
+func fetch(channel string) []string {
 	url := utils.MakeUrl(channel)
 	res, err := http.Get(url)
 	if err != nil {
@@ -19,5 +19,6 @@ func fetch(channel string) {
 		panic(err)
 	}
 
-	_ = parse(bytes)
+	resp := parse(bytes)
+	return resp.Prefixes
 }
