@@ -9,13 +9,13 @@ import (
 )
 
 func init() {
-	App.Get("/versions", versionsHandler)
+	App.Get("/versions/:channel", versionsHandler)
 }
 
 func versionsHandler(c *fiber.Ctx) error {
-	channel := c.Query("channel", "stable")
+	channel := c.Params("channel")
 	if !utils.IsValidChannel(channel) {
-		return utils.Error(fmt.Sprintf("Argument %v of type channel is invalid. Must be one of %v", channel, strings.Join(utils.Channels[:], ", ")), c)
+		return utils.Error(fmt.Sprintf("Argument `%v` is not a valid channel. Must be one of %v", channel, strings.Join(utils.Channels[:], ", ")), c)
 	}
 	js, err := utils.ReadVersions("versions.json")
 
