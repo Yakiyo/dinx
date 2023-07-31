@@ -1,7 +1,22 @@
 package main
 
-import "github.com/Yakiyo/dinx/server"
+import (
+	"log"
+	"os"
+	"strconv"
+
+	"github.com/Yakiyo/dinx/server"
+)
 
 func main() {
-	server.App.Listen(":3000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+
+	if _, err := strconv.Atoi(port); err != nil {
+		log.Fatalf("Value of %v for port is invalid. Must be an int", port)
+	}
+
+	server.App.Listen(":" + port)
 }
