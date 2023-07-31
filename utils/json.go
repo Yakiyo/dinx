@@ -3,6 +3,7 @@ package utils
 import (
 	"os"
 
+	"github.com/gofiber/fiber/v2"
 	json "github.com/json-iterator/go"
 )
 
@@ -19,4 +20,11 @@ func ReadVersions(path string) (map[string][]string, error) {
 		return m, err
 	}
 	return m, nil
+}
+
+// Convert a string to a { error: `msg` } map
+func Error(msg string, c *fiber.Ctx) error {
+	return c.JSON(map[string]string{
+		"error": msg,
+	})
 }
