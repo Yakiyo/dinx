@@ -15,7 +15,7 @@ func init() {
 	App.Use(recover.New())
 
 	App.Get("/", func(c *fiber.Ctx) error {
-		c.Redirect("https://github.com/Yakiyo/dinx", 302)
+		c.SendString("Hello World :)")
 		return nil
 	})
 }
