@@ -7,9 +7,9 @@ import (
 )
 
 // Read json from file
-func ReadVersions(path string) (map[string]string, error) {
+func ReadVersions(path string) (map[string][]string, error) {
 	f, err := os.ReadFile(path)
-	m := map[string]string{}
+	m := map[string][]string{}
 
 	if err != nil {
 		return m, err
