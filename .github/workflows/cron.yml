@@ -1,0 +1,29 @@
+# Upate the versions.json file once everyday and commit any changes
+name: cron
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: './go.mod'
+  
+      - name: Build
+        run: go build -v ./...
+
+      - name: Generate
+        run: go run ./script
+      
+      - uses: stefanzweifel/git-auto-commit-action@v4
