@@ -43,7 +43,7 @@ func latestHandler(c *fiber.Ctx) error {
 		return utils.Error(err.Error(), c)
 	}
 
-	out := output{}
+	out := map[string]string{}
 
 	err = json.Unmarshal(data, &out)
 
@@ -51,16 +51,9 @@ func latestHandler(c *fiber.Ctx) error {
 		return utils.Error(err.Error(), c)
 	}
 
-	return c.JSON(map[string]map[string]string{
-		"body": {
-			"channel": channel,
-			"version": out.Version,
-			"date":    out.Date,
-		},
-	})
-}
+	out["channel"] = channel
 
-type output struct {
-	Version string `json:"version"`
-	Date    string `json:"date"`
+	return c.JSON(map[string]map[string]string{
+		"body": out,
+	})
 }
