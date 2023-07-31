@@ -1,3 +1,10 @@
+/**
+ * Returns an array of versions of the requested channel the dart sdk
+ *
+ * Endpoint: /versions/{channel}
+ * Result: { body: []string }
+ */
+
 package server
 
 import (
@@ -24,6 +31,6 @@ func versionsHandler(c *fiber.Ctx) error {
 	}
 	val := js[channel]
 	return c.JSON(map[string][]string{
-		channel: val,
+		"body": val,
 	})
 }
