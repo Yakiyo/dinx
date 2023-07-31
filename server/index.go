@@ -7,6 +7,7 @@ import (
 )
 
 var App *fiber.App = fiber.New(fiber.Config{
+	AppName: "dinx",
 	JSONEncoder: json.Marshal,
 	JSONDecoder: json.Unmarshal,
 })
