@@ -86,7 +86,8 @@ Type: `Map<string, Map<string, string>`
         "version": "string",
         "channel": "string",
     }
-}```
+}
+```
 
 For any queries or bugs, please open a new [issue](https://github.com/Yakiyo/dinx/issues)
 
